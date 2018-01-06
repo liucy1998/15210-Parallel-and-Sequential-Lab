@@ -24,12 +24,10 @@ struct
         val r = map (mark ~1) r'
         val kkk = merge cmp l r
         (* The height of elements in group 1 can only be changed by those in
-           group -1. Vice versa. 
-        *)
+           group -1. Vice versa. *)
         val s = map2 (fn ((a,b,c),(_,d,_)) => (a,Int.max(b,d),c)) 
             (scani (calc 1) (0,0,1) kkk) (scani (calc ~1) (0,0,~1) kkk)
       in 
-        map inv (filterIdx (fn (i,p) =>
-          if i = 0 then true else #2 (nth s (i-1)) <> #2 p) s)
+        map inv (filterIdx (fn (i,p) => if i = 0 then true else #2 (nth s (i-1)) <> #2 p) s)
       end
 end

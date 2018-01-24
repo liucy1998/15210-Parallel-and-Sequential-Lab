@@ -21,6 +21,14 @@ struct
       |(_, ELT _) => if nth y 0 = ONE then x else singleton ZERO
       |(_,_) => 
         let
+          fun delz a =
+            let 
+              val t = rev (map (fn ONE => 1 | ZERO => 0) a)
+              val tt = scani (fn (0,1)=>1|(1,_)=>1|(0,0)=>0) 0 t
+              val len = reduce op+ 0 tt
+            in
+              take (a, len)
+            end
           fun init a b = 
             let
               val lx = length x
@@ -38,7 +46,7 @@ struct
           val (pr, pqrs', qs) = par3 (fn _ => p**r, fn _ => pplusq**rpluss, fn _ => q**s) 
           val pqrs = (pqrs'--pr)--qs
         in
-          (mul2 pr (length q *2)) ++ (mul2 pqrs (length q)) ++ qs 
+          delz ((mul2 pr (length q *2)) ++ (mul2 pqrs (length q)) ++ qs )
         end
   val mul = op**
 end

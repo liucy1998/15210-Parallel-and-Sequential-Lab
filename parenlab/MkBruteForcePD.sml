@@ -40,7 +40,8 @@ struct
         end
     val ans = getans(0,0)
     in
-      if check(0, 0) then SOME ans
+      if length parens = 0 then NONE
+      else if check(0, 0) then SOME ans
       else NONE
     end
 end

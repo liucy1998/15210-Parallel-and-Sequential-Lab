@@ -1,0 +1,32 @@
+functor MkThesaurusASP (ASP : ALL_SHORTEST_PATHS where type vertex = string)
+  : THESAURUS =
+struct
+  structure Seq = ASP.Seq
+  open Seq
+  open ASP
+
+  (* Remove the following two lines when you're done! *)
+  exception NYI
+
+  (* You must define the following type and
+   * explain your decision here with a comment.
+   *)
+  type thesaurus = graph
+
+  (* Task 3.1 *)
+  fun make (S : (string * string seq) seq) : thesaurus = 
+    let
+      fun f (t : string * string seq) = map ((fn a => (fn b =>(a,b))) (#1 t)) (#2 t)
+    in
+      ASP.makeGraph (flatten (map f S) )
+    end
+
+  (* Task 3.2 *)
+  fun numWords (T : thesaurus) : int = ASP.numVertices T
+
+  fun synonyms (T : thesaurus) (w : string) : string seq = ASP.outNeighbors T w
+
+  (* Task 3.3 *)
+  fun query (T : thesaurus) (w1 : string) (w2 : string) : string seq seq =
+    report (ASP.makeASP T w1) w2
+end

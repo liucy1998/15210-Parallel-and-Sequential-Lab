@@ -28,7 +28,7 @@ struct
         in inject (map2 (fn ((k,c),(_,w)) =>(k,c-w)) curmintb weightsumtb) cur end
       fun joinner (E : edgem seq, n : int, i : int, sd : Rand.rand) =
         let
-          (*val PRINT = print ("Length E = " ^ Int.toString(length E) ^ "\n")*)
+          val PRINT = print ("Length E = " ^ Int.toString(length E) ^ "\n")
           val mapv = map (fn (u,v,w,l) => (u,(u,v,w,l))) E
           val t = tabulate (fn i => (~1,~1,~1,~1)) n
           val minE = filter (fn (_,_,_,x) => not (x = ~1)) (inject mapv t)

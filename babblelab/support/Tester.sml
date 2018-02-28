@@ -90,7 +90,7 @@ struct
   fun babbleFromFile fname =
     let
       val shakespeare = TextIO.inputAll (TextIO.openIn fname)
-      val kgss = Result.run (uncurry2 StuStuKGramStats.makeStats) (shakespeare, 5)
+      val kgss = Result.run (uncurry2 StuStuKGramStats.makeStats) (shakespeare, 12)
       val babble =
         case kgss of
           Result.Value kgss => StuBabble.randomDocument kgss 10 (Random210.fromInt 15210)

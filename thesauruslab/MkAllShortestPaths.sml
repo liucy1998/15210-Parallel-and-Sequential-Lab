@@ -52,15 +52,15 @@ struct
             let
               fun prolong s = 
                 let
-                  val p = nth s 0
+                  val p = hd s
                   val parents = #1 (getOpt(Table.find A p,(empty(),1)))
                 in
-                  tabulate (fn i => append (Seq.singleton(nth parents i), s)) (length parents)
+                  tabulate (fn i => (nth parents i)::s) (length parents)
                 end
             in
               retrace (flatten (map prolong path) ) (dis-1)
             end
       in
-        retrace (singleton(singleton v)) (#2 st)
+        Seq.map (fn x => Seq.fromList x) (retrace (singleton([v])) (#2 st))
       end
 end

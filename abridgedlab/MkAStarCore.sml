@@ -31,7 +31,7 @@ struct
         | SOME x => x
       fun dijkstra (X,Q) = 
         case PQ.deleteMin Q of
-          (NONE,_) => NONE
+          (NONE,_) => X 
         | (SOME (hd,(v,d)),Q') =>
           case Table.find X v of SOME _ => dijkstra (X,Q') | NONE =>
             let
@@ -39,7 +39,9 @@ struct
               fun relax (x,(u,w)) = PQ.insert ((h u)+d+w,(u,d+w)) x 
               val Q'' = Seq.iter relax Q' (nb G v)
             in dijkstra (X',Q'') end
+      val tbs = Table.toSeq (Table.extract (dijkstra (Table.empty(),QQ),T))
     in
-      dijkstra (Table.empty(),QQ)
+      if Seq.length tbs = 0 then NONE
+      else SOME (Seq.reduce (fn ((a,b),(c,d)) => if b < d then (a,b) else (c,d)) (Seq.nth tbs 0) tbs)
     end
 end
